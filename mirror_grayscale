@@ -1,0 +1,26 @@
+#modified from page 86 program 24
+#use setMediaPath() before calling this function
+path=pickAFile()
+picture=makePicture(path)
+def mirror():
+  catPict=makePicture(path)
+  width=getWidth(catPict)
+  height=getHeight(catPict)
+  canvas=makeEmptyPicture(width*2,height)
+  #Now, do the actual copying
+  for x in range(0, width):
+    for y in range(0, height):
+      
+      pixel = getPixel (picture, x, y)
+      newRed = getRed(pixel)*0.299
+      newGreen = getGreen(pixel)*0.587
+      newBlue = getBlue(pixel)* 0.114
+      luminance = newRed+newGreen+newBlue
+      color=getColor(getPixel(catPict, x, y))
+      setColor(getPixel(canvas, x, y), color)
+      setColor(getPixel(canvas,width*2-x-1, y), makeColor(luminance,luminance,luminance))
+      
+  show(catPict)
+  show(canvas)
+  return canvas
+print mirror()
